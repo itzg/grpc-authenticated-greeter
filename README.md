@@ -31,6 +31,16 @@ The client should log the response from the server, such as:
 INFO[0000] got response   response="Hello, client1. You said 'Read me'"
 ```
 
+## Re-generating protobuf/gRPC code
+
+[Follow these instructions](https://grpc.io/docs/quickstart/go/#install-protocol-buffers-v3) to install protoc and the grpc plugin.
+
+Run the following to regenerate the `*.pb.go` file, [protocol/HelloService.pb.go](protocol/HelloService.pb.go)
+
+```shell script
+go generate ./...
+```
+
 ## What I learned
 
 - [go-arg](https://github.com/alexflint/go-arg) is very cool! Just feed it a struct and it'll parse command line arguments. It's very flexible and intuitive. Even embedding common arguments into a "command struct" did what I expected
@@ -55,4 +65,8 @@ type ServerCmd struct {
 		ClientAuth:   tls.RequireAndVerifyClientCert,
 		ClientCAs:    clientCertPool,
 	})
+```
+- The [Go package can be configured](https://github.com/golang/protobuf#packages-and-input-paths) for the code generated from the protobuf declarations. The following in [protocol/HelloService.proto](protocol/HelloService.proto) avoids the awkwardness of a package named for the proto file:
+```proto
+option go_package = "protocol";
 ```
