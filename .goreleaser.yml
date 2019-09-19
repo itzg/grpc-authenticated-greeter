@@ -22,7 +22,8 @@ archives:
       format: zip
 dockers:
   - image_templates:
-      - itzg/grpc-authenticated-greeter
+      - "itzg/grpc-authenticated-greeter"
+      - "itzg/grpc-authenticated-greeter:{{ .Tag }}"
 checksum:
   name_template: 'checksums.txt'
 snapshot:
