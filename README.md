@@ -46,9 +46,9 @@ type ServerCmd struct {
 	Binding string `arg:"required" help:"host:port of server binding where host is optional"`
 }
 ```
-- Generating self-signed certs and then signing client and server certs is quite doable in Go. Check out [certs/generate.go](certs/generate.go) to see how that's done
+- Generating a self-signed CA cert and then signing client and server certs is quite doable in Go. Check out [certs/generate.go](certs/generate.go) to see how that's done
 - The authenticating client info is a little bit buried when implementing a server handler, but [peer.FromContext](https://godoc.org/google.golang.org/grpc/peer#FromContext) was the key to cracking that open. [server/server.go](server/server.go) is where that is used.
-- To do full [mTLS authentication](https://grpc.io/docs/guides/auth/, be sure to configure the server's TLS to require and verify the client cert:
+- To do full [mTLS authentication](https://grpc.io/docs/guides/auth/), be sure to configure the server's TLS to require and verify the client cert:
 ```go
 	transportCreds := credentials.NewTLS(&tls.Config{
 		Certificates: []tls.Certificate{cert},
