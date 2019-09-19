@@ -1,4 +1,4 @@
-package common
+package certs
 
 import (
 	"crypto/tls"

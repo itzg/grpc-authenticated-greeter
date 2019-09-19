@@ -2,7 +2,7 @@ package client
 
 import (
 	"context"
-	"github.com/itzg/grpc-authenticated-greeter/common"
+	"github.com/itzg/grpc-authenticated-greeter/certs"
 	"github.com/itzg/grpc-authenticated-greeter/protocol"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
@@ -22,7 +22,7 @@ func Run(caCert string, privateKey string, privateCert string, serverAddress str
 		serverName = host
 	}
 
-	tlsConfig, err := common.LoadClientTlsConfig(caCert, privateKey, privateCert, serverName)
+	tlsConfig, err := certs.LoadClientTlsConfig(caCert, privateKey, privateCert, serverName)
 	if err != nil {
 		logrus.WithError(err).Fatal("loading client tls config")
 	}

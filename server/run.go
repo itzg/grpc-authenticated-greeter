@@ -2,7 +2,7 @@ package server
 
 import (
 	"crypto/tls"
-	"github.com/itzg/grpc-authenticated-greeter/common"
+	"github.com/itzg/grpc-authenticated-greeter/certs"
 	"github.com/itzg/grpc-authenticated-greeter/protocol"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
@@ -21,7 +21,7 @@ func Run(caCert string, privateKey string, privateCert string, binding string) {
 		logrus.WithError(err).Fatal("loading key pair")
 	}
 
-	clientCertPool, err := common.LoadCertPool(caCert)
+	clientCertPool, err := certs.LoadCertPool(caCert)
 	if err != nil {
 		logrus.WithError(err).Fatal("loading CA cert")
 	}
