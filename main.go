@@ -1,11 +1,19 @@
 package main
 
 import (
+	"fmt"
 	"github.com/alexflint/go-arg"
 	"github.com/itzg/grpc-authenticated-greeter/certs"
 	"github.com/itzg/grpc-authenticated-greeter/client"
 	"github.com/itzg/grpc-authenticated-greeter/server"
 	"os"
+)
+
+// injected by release build
+var (
+	version string
+	commit  string
+	date    string
 )
 
 type ClientServerArgs struct {
@@ -30,13 +38,18 @@ type GenCerts struct {
 	// no args needed
 }
 
-var args struct {
+type args struct {
 	Client   *ClientCmd `arg:"subcommand:client" help:"Runs the gRPC client and sends authenticated hello request"`
 	Server   *ServerCmd `arg:"subcommand:server" help:"Runs the gRPC server"`
 	GenCerts *GenCerts  `arg:"subcommand:gencerts" help:"Generate CA, server, and client certs for testing"`
 }
 
+func (args) Version() string {
+	return fmt.Sprintf("grpc-authenticated-greeter %s (%s @ %s)", version, commit, date)
+}
+
 func main() {
+	var args args
 	parser := arg.MustParse(&args)
 
 	switch {
